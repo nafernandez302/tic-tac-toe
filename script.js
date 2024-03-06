@@ -16,11 +16,11 @@ function createGame(){
     }
     const getActualPlayer = () => actualPlayer;
     const playX = (position) => {
-        console.assert(board[position] === '-'); 
+        console.assert(board[position] === '-', "square already used"); 
         board[position] = 'X';
     }
     const playO = (position) => {
-        console.assert(board[position] === '-');
+        console.assert(board[position] === '-', "square already used");
         board[position] = 'O';
         
     }
