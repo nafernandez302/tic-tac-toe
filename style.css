@@ -1,0 +1,19 @@
+
+.main {
+    margin-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+  }
+  
+.grid-container > div {
+    display:flex;
+    border: 1px solid blue;
+    align-items: center;
+    justify-content: center;
+}
