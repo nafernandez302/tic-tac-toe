@@ -30,7 +30,26 @@ function createGame(){
 
 
 function checkDiagonals(gameboard){
+    let hasWinner = false;
+    let winner = undefined;
+    // up-left to down-right
+    let letter = gameboard.board[0];
+    if((letter !== '-') && (letter === gameboard.board[4]) && (letter === gameboard.board[8])){
+        hasWinner = true;
+        winner = letter;
+        return winner;
+    }
 
+    // right-up to down-left
+    letter = gameboard.board[2];
+    if(!hasWinner && (letter !== '-') && (letter === gameboard.board[4]) && (letter === gameboard.board[6])){
+        hasWinner = true;
+        winner = letter;
+    }
+    if(hasWinner){
+        console.log("diagonal winner:", winner);
+    }
+    return winner;
 }
 
 function checkRows(gameboard){
@@ -44,7 +63,9 @@ function checkRows(gameboard){
         }
         
     }
-    console.log("row winner is:", winner);
+    if(hasWinner){
+        console.log("row winner is:", winner);
+    }
     return winner;
 }
 
@@ -58,13 +79,17 @@ function checkColumns(gameboard){
                 winner = letter;
         }
     }
-    console.log("column winner is:", winner);
+    if(hasWinner){
+        console.log("column winner is:", winner);
+    }
+    
     return winner;
 }
 
 const gameboard = createGame();
-gameboard.play(2);
-gameboard.playX(5);
-gameboard.playX(8);
+gameboard.playX(2);
+gameboard.playX(4);
+gameboard.playX(6);
 checkColumns(gameboard);
 checkRows(gameboard);
+checkDiagonals(gameboard);
