@@ -28,38 +28,43 @@ function createGame(){
             playX, playO}
 }
 
-const gameboard = createGame();
 
 function checkDiagonals(gameboard){
 
 }
 
 function checkRows(gameboard){
-    console.assert(gameboard.getTurn() == 9, "game didn't end");
     let hasWinner = false;
     let winner = undefined;
-    for (let i= 0; i < 3; i++) {
+    for (let i= 0; i < 3 && !hasWinner; i++) {
         let letter = gameboard.board[i*3];
-        if(!hasWinner && (letter === gameboard.board[i*3] + 1) && (letter === gameboard.board[i*3] + 2)){
+        if((letter !== '-') && (letter === gameboard.board[(i*3) + 1]) && (letter === gameboard.board[(i*3) + 2])){
                 hasWinner = true;
                 winner = letter;
-            }
+        }
         
     }
+    console.log("row winner is:", winner);
     return winner;
 }
 
 function checkColumns(gameboard){
-    console.assert(gameboard.getTurn() == 9, "game didn't end");
     let hasWinner = false;
     let winner = undefined;
-    for (let i= 0; i < 3; i++) {
+    for (let i= 0; i < 3 && !hasWinner; i++) {
         let letter = gameboard.board[i];
-        if(!hasWinner && (letter === gameboard.board[i+3]) && (letter === gameboard.board[i+6])){
+        if((letter !== '-') && (letter === gameboard.board[i+3]) && (letter === gameboard.board[i+6])){
                 hasWinner = true;
                 winner = letter;
-            }
-        
+        }
     }
+    console.log("column winner is:", winner);
     return winner;
 }
+
+const gameboard = createGame();
+gameboard.play(2);
+gameboard.playX(5);
+gameboard.playX(8);
+checkColumns(gameboard);
+checkRows(gameboard);
