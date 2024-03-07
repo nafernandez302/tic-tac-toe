@@ -4,15 +4,7 @@ function createGame(){
     let board = ['-','-','-',
                  '-','-','-',
                 '-','-','-'];
-    const addTurn = () => {
-        turn++;
-        if(actualPlayer === 'X'){
-            actualPlayer = 'O';
-        }
-        else{
-            actualPlayer = 'X';
-        }
-    }
+    let gameOver = false;
     function updateUI() {
         const boxes = document.getElementsByClassName("box");
         for (let i = 0; i < boxes.length; i++) {
@@ -20,14 +12,24 @@ function createGame(){
         }
     }
     function handleClick(position) {
-        if (board[position] === '-') {
+        if (board[position] === '-' && !gameOver) {
             board[position] = actualPlayer;
-            turn++;
-            actualPlayer = (actualPlayer === 'X') ? 'O' : 'X';
             updateUI();
-        } else {
+            turn++;
+            const winner = checkWinner({board});
+            if(winner){
+                console.log("Winner is " + actualPlayer);
+                gameOver = true;
+            }
+            else if(turn == 9){
+                console.log("Tie");
+                gameOver = true;
+            }
+            actualPlayer = (actualPlayer === 'X') ? 'O' : 'X';
+        } else if (!gameOver){
             console.log("square already used");
         }
+        
     }
     const boxes = document.getElementsByClassName("box");
 
@@ -92,8 +94,28 @@ function checkColumns(gameboard){
     if(hasWinner){
         console.log("column winner is:", winner);
     }
-    
     return winner;
+}
+
+function checkWinner(gameboard){
+    let possibleWinner = undefined;
+
+    possibleWinner = checkColumns(gameboard);
+    if(possibleWinner){
+        return possibleWinner;
+    }
+
+    possibleWinner = checkRows(gameboard);
+    if(possibleWinner){
+        return possibleWinner;
+    }
+
+    possibleWinner = checkDiagonals(gameboard);
+    if(possibleWinner){
+        return possibleWinner;
+    }
+
+    return possibleWinner;
 }
 
 
