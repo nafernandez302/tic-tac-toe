@@ -1,33 +1,47 @@
 function createGame(){
     let turn = 0;
-    let actualPlayer = 'Player 1';
+    let actualPlayer = 'X';
     let board = ['-','-','-',
                  '-','-','-',
                 '-','-','-'];
     const getTurn = () => turn;
     const addTurn = () => {
         turn++;
-        if(actualPlayer = 'Player 1'){
-            actualPlayer = 'Player 2';
+        if(actualPlayer === 'X'){
+            actualPlayer = 'O';
         }
         else{
-            actualPlayer = 'Player 1';
+            actualPlayer = 'X';
         }
     }
     const getActualPlayer = () => actualPlayer;
     const playX = (position) => {
         console.assert(board[position] === '-', "square already used"); 
         board[position] = 'X';
+        addTurn();
     }
     const playO = (position) => {
         console.assert(board[position] === '-', "square already used");
         board[position] = 'O';
+        addTurn();
         
+    }
+    const boxes = document.getElementsByClassName("box");
+
+    for(let i = 0; i < boxes.length; i++){
+        boxes[i].addEventListener("click", function(gameboard){
+            this.textContent = actualPlayer;
+            if(actualPlayer === 'X'){
+                playX(i);
+            }
+            else{
+                playO(i);
+            }
+        });
     }
     return {board, turn, actualPlayer, getTurn, addTurn, getActualPlayer,
             playX, playO}
 }
-
 
 function checkDiagonals(gameboard){
     let hasWinner = false;
@@ -86,10 +100,6 @@ function checkColumns(gameboard){
     return winner;
 }
 
+
+
 const gameboard = createGame();
-gameboard.playX(2);
-gameboard.playX(4);
-gameboard.playX(6);
-checkColumns(gameboard);
-checkRows(gameboard);
-checkDiagonals(gameboard);
