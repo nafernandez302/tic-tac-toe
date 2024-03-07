@@ -35,9 +35,31 @@ function checkDiagonals(gameboard){
 }
 
 function checkRows(gameboard){
-
+    console.assert(gameboard.getTurn() == 9, "game didn't end");
+    let hasWinner = false;
+    let winner = undefined;
+    for (let i= 0; i < 3; i++) {
+        let letter = gameboard.board[i*3];
+        if(!hasWinner && (letter === gameboard.board[i*3] + 1) && (letter === gameboard.board[i*3] + 2)){
+                hasWinner = true;
+                winner = letter;
+            }
+        
+    }
+    return winner;
 }
 
 function checkColumns(gameboard){
-
+    console.assert(gameboard.getTurn() == 9, "game didn't end");
+    let hasWinner = false;
+    let winner = undefined;
+    for (let i= 0; i < 3; i++) {
+        let letter = gameboard.board[i];
+        if(!hasWinner && (letter === gameboard.board[i+3]) && (letter === gameboard.board[i+6])){
+                hasWinner = true;
+                winner = letter;
+            }
+        
+    }
+    return winner;
 }
