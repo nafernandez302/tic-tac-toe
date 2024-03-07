@@ -4,7 +4,6 @@ function createGame(){
     let board = ['-','-','-',
                  '-','-','-',
                 '-','-','-'];
-    const getTurn = () => turn;
     const addTurn = () => {
         turn++;
         if(actualPlayer === 'X'){
@@ -14,33 +13,30 @@ function createGame(){
             actualPlayer = 'X';
         }
     }
-    const getActualPlayer = () => actualPlayer;
-    const playX = (position) => {
-        console.assert(board[position] === '-', "square already used"); 
-        board[position] = 'X';
-        addTurn();
+    function updateUI() {
+        const boxes = document.getElementsByClassName("box");
+        for (let i = 0; i < boxes.length; i++) {
+            boxes[i].textContent = board[i];
+        }
     }
-    const playO = (position) => {
-        console.assert(board[position] === '-', "square already used");
-        board[position] = 'O';
-        addTurn();
-        
+    function handleClick(position) {
+        if (board[position] === '-') {
+            board[position] = actualPlayer;
+            turn++;
+            actualPlayer = (actualPlayer === 'X') ? 'O' : 'X';
+            updateUI();
+        } else {
+            console.log("square already used");
+        }
     }
     const boxes = document.getElementsByClassName("box");
 
     for(let i = 0; i < boxes.length; i++){
         boxes[i].addEventListener("click", function(gameboard){
-            this.textContent = actualPlayer;
-            if(actualPlayer === 'X'){
-                playX(i);
-            }
-            else{
-                playO(i);
-            }
+            handleClick(i);
         });
     }
-    return {board, turn, actualPlayer, getTurn, addTurn, getActualPlayer,
-            playX, playO}
+    return {board, actualPlayer}
 }
 
 function checkDiagonals(gameboard){
